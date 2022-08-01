@@ -91,6 +91,12 @@ function ShowPhone() {
             ))}
           </tbody>
         </table>
+        <Link
+        to={"/"}
+        className="text-white font-semibold px-6 py-2 rounded-xl bg-zinc-400 font-Inter text-2xl mt-2"
+      >
+        Back to Home
+      </Link>
       </div>
     </div>
   );

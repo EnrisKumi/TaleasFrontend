@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 
 function AddUser() {
   const [name, setName] = useState("");
@@ -68,6 +68,12 @@ function AddUser() {
           Add User
         </button>
       </form>
+      <Link
+        to={"/"}
+        className="text-white font-semibold px-6 py-2 rounded-xl bg-zinc-400 font-Inter text-2xl mt-2"
+      >
+        Back to Home
+      </Link>
     </div>
   );
 }
