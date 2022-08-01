@@ -4,8 +4,8 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 
 function EditPhone() {
 
-    const [providerName,setProviderName]= useState('');
-    const [number,setNumber] = useState('');
+    const [providerName,setProviderName]= useState("");
+    const [number,setNumber] = useState("");
 
     const { id } = useParams();
     const navigate = useNavigate();
@@ -64,6 +64,12 @@ function EditPhone() {
           Update Phone Number
         </Link>
       </form>
+      <Link
+        to={"/"}
+        className="text-white font-semibold px-6 py-2 rounded-xl bg-zinc-400 font-Inter text-2xl mt-2"
+      >
+        Back to Home
+      </Link>
     </div>
   );
 }
