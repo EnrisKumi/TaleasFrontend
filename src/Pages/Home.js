@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function Home() {
+  //home
   const [users, setUsers] = useState([]);
 
   const getUsersData = () => {
