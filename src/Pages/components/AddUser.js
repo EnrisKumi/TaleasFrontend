@@ -20,7 +20,7 @@ function AddUser() {
 
   function Submit(e) {
     e.preventDefault();
-    axios.post("http://localhost:9000/users", data).then(navigate("/"));
+    axios.post("https://ar8x3qmjog.execute-api.us-east-1.amazonaws.com/dev/users", data).then(navigate("/"));
   }
 
   return (

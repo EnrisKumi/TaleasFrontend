@@ -8,7 +8,7 @@ function Home() {
 
   const getUsersData = () => {
     axios
-      .get("http://localhost:9000/users")
+      .get("https://ar8x3qmjog.execute-api.us-east-1.amazonaws.com/dev/users")
       .then((res) => {
         console.log(res);
         setUsers(res.data);
@@ -19,7 +19,7 @@ function Home() {
   };
 
   function Delete(id) {
-    axios.delete(`http://localhost:9000/users/${id}`).then(getUsersData());
+    axios.delete(`https://ar8x3qmjog.execute-api.us-east-1.amazonaws.com/dev/users/${id}`).then(getUsersData());
   }
 
   useEffect(() => {

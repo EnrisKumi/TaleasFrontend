@@ -8,7 +8,7 @@ function ShowPhone() {
 
   const getPhonesData = () => {
     axios
-      .get(`http://localhost:9000/one2many/users/${id}`)
+      .get(`https://ar8x3qmjog.execute-api.us-east-1.amazonaws.com/dev/one2many/users/${id}`)
       .then((res) => {
         console.log(res);
         setPhones(res.data.phoneNumber);
@@ -19,7 +19,7 @@ function ShowPhone() {
   };
 
   function Delete(id) {
-    axios.delete(`http://localhost:9000/one2many/phonenr/${id}`).then(getPhonesData());
+    axios.delete(`https://ar8x3qmjog.execute-api.us-east-1.amazonaws.com/dev/one2many/phonenr/${id}`).then(getPhonesData());
   }
 
   useEffect(() => {

@@ -17,7 +17,7 @@ function AddPhone() {
 
     function Submit(e){
         e.preventDefault();
-        axios.post(`http://localhost:9000/one2many/users/${id}`,data).then(navigate('/'));
+        axios.post(`https://ar8x3qmjog.execute-api.us-east-1.amazonaws.com/dev/one2many/users/${id}`,data).then(navigate('/'));
     }
 
 

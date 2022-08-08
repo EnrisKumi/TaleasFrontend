@@ -12,7 +12,7 @@ function EditPhone() {
 
     const getPhones = () =>{
     axios
-      .get(`http://localhost:9000/one2many/users/${id}`)
+      .get(`https://ar8x3qmjog.execute-api.us-east-1.amazonaws.com/dev/one2many/users/${id}`)
       .then((res) => {
         setProviderName(res.data.providerName);
         setNumber(res.data.number);
@@ -32,7 +32,7 @@ function EditPhone() {
       };
     
       function Update() {
-        axios.patch(`http://localhost:9000/one2many/phonenumbers/${id}`, data).then(navigate("/"));
+        axios.patch(`https://ar8x3qmjog.execute-api.us-east-1.amazonaws.com/dev/one2many/phonenumbers/${id}`, data).then(navigate("/"));
       }
 
 
