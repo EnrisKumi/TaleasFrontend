@@ -13,7 +13,7 @@ function Edit() {
 
   const getUsersData = () => {
     axios
-      .get(`https://ar8x3qmjog.execute-api.us-east-1.amazonaws.com/dev/users/${id}`)
+      .get(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users/${id}`)
       .then((res) => {
         setName(res.data.name);
         setSurname(res.data.surname);
@@ -40,7 +40,7 @@ function Edit() {
 
   function Update() {
     //e.preventDefault()
-    axios.patch(`https://ar8x3qmjog.execute-api.us-east-1.amazonaws.com/dev/users/${id}`, data).then(navigate("/"));
+    axios.patch(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users/${id}`, data).then(navigate("/"));
   }
 
   return (

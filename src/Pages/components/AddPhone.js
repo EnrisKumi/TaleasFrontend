@@ -17,7 +17,7 @@ function AddPhone() {
 
     function Submit(e){
         e.preventDefault();
-        axios.post(`https://ar8x3qmjog.execute-api.us-east-1.amazonaws.com/dev/one2many/users/${id}`,data).then(navigate('/'));
+        axios.post(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/one2many/users/${id}`,data).then(navigate('/'));
     }
 
 

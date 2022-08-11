@@ -8,7 +8,7 @@ function User() {
 
   const getUsersData = () => {
     axios
-      .get(`https://ar8x3qmjog.execute-api.us-east-1.amazonaws.com/dev/users/${id}`)
+      .get(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users/${id}`)
       .then((res) => {
         console.log(res);
         setUser(res.data);

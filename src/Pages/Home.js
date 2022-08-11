@@ -8,7 +8,7 @@ function Home() {
 
   const getUsersData = () => {
     axios
-      .get("https://ar8x3qmjog.execute-api.us-east-1.amazonaws.com/dev/users")
+      .get("https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users")
       .then((res) => {
         console.log(res);
         setUsers(res.data);
@@ -19,7 +19,7 @@ function Home() {
   };
 
   function Delete(id) {
-    axios.delete(`https://ar8x3qmjog.execute-api.us-east-1.amazonaws.com/dev/users/${id}`).then(getUsersData());
+    axios.delete(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users/${id}`).then(getUsersData());
   }
 
   useEffect(() => {
