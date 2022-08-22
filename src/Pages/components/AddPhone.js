@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams,Link } from "react-router-dom";
+import { Auth } from 'aws-amplify';
 
 function AddPhone() {
 
@@ -10,14 +11,22 @@ function AddPhone() {
 
     const navigate = useNavigate();
 
-    const data = {
+    const datap = {
         providerName : providerName,
         number : number,
     }
 
-    function Submit(e){
-        e.preventDefault();
-        axios.post(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/one2many/users/${id}`,data).then(navigate('/'));
+    const Submit = async e =>{
+      e.preventDefault();
+      const userAuth = await Auth.currentAuthenticatedUser();
+      const token = userAuth.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+          headers: {
+              Authorization: token,
+          },
+      }
+      await axios.post(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/one2many/users/${id}`,datap,requestInfo);
+      navigate("/");
     }
 
 

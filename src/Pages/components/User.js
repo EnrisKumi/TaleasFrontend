@@ -1,21 +1,25 @@
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Auth } from "aws-amplify";
 
 function User() {
   const { id } = useParams();
   const [user, setUser] = useState();
 
-  const getUsersData = () => {
-    axios
-      .get(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users/${id}`)
-      .then((res) => {
-        console.log(res);
-        setUser(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const getUsersData = async () => {
+    const user1 = await Auth.currentAuthenticatedUser();
+    const token = user1.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    };
+    const res = await axios.get(
+      `https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users/${id}`,
+      requestInfo
+    );
+    setUser(res.data);
   };
 
   useEffect(() => {

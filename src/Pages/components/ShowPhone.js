@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
+import { Auth } from "aws-amplify";
 
 function ShowPhone() {
   const [phones, setPhones] = useState([]);
   const { id } = useParams();
 
-  const getPhonesData = () => {
-    axios
-      .get(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/one2many/users/${id}`)
+  const getPhonesData = async () => {
+    const user = await Auth.currentAuthenticatedUser();
+    const token = user.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    };
+    await axios
+      .get(
+        `https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/one2many/users/${id}`,
+        requestInfo
+      )
       .then((res) => {
-        console.log(res);
         setPhones(res.data.phoneNumber);
       })
       .catch((err) => {
@@ -18,8 +28,19 @@ function ShowPhone() {
       });
   };
 
-  function Delete(id) {
-    axios.delete(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/one2many/phonenr/${id}`).then(getPhonesData());
+  const Delete = async (id) =>{
+    const user = await Auth.currentAuthenticatedUser();
+    const token = user.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+        headers: {
+            Authorization: token,
+        },
+    }
+    await axios
+    .delete(
+      `https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/one2many/phonenr/${id}`
+    ,requestInfo);
+    getPhonesData();
   }
 
   useEffect(() => {
@@ -92,11 +113,11 @@ function ShowPhone() {
           </tbody>
         </table>
         <Link
-        to={"/"}
-        className="text-white font-semibold px-6 py-2 rounded-xl bg-zinc-400 font-Inter text-2xl mt-2"
-      >
-        Back to Home
-      </Link>
+          to={"/"}
+          className="text-white font-semibold px-6 py-2 rounded-xl bg-zinc-400 font-Inter text-2xl mt-2"
+        >
+          Back to Home
+        </Link>
       </div>
     </div>
   );

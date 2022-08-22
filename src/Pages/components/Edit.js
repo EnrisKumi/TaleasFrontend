@@ -1,25 +1,35 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, useNavigate,Link } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import {Auth} from 'aws-amplify';
 
 function Edit() {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
-  
+
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const getUsersData = () => {
-    axios
-      .get(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users/${id}`)
+  const getUsersData = async () => {
+    const user = await Auth.currentAuthenticatedUser();
+    const token = user.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    };
+    const res = await axios
+      .get(
+        `https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users/${id}`,
+        requestInfo
+      )
       .then((res) => {
         setName(res.data.name);
         setSurname(res.data.surname);
         setEmail(res.data.email);
         setAddress(res.data.address);
-        //set phone nr
       })
       .catch((err) => {
         console.log(err);
@@ -35,12 +45,23 @@ function Edit() {
     surname: surname,
     email: email,
     address: address,
-    //phoneNumber: phoneNumber
+
   };
 
-  function Update() {
-    //e.preventDefault()
-    axios.patch(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users/${id}`, data).then(navigate("/"));
+  const Update = async() =>{
+    const user = await Auth.currentAuthenticatedUser();
+        const token = user.signInUserSession.idToken.jwtToken;
+        const requestInfo = {
+            headers: {
+                Authorization: token,
+            },
+        }
+        axios
+        .patch(
+          `https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users/${id}`,
+          data,requestInfo
+        )
+        .then(navigate("/"));
   }
 
   return (

@@ -1,26 +1,41 @@
+import { Auth } from "aws-amplify";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+
 
 function Home() {
   //home
   const [users, setUsers] = useState([]);
 
-  const getUsersData = () => {
-    axios
-      .get("https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users")
-      .then((res) => {
-        console.log(res);
-        setUsers(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const getUsersData = async () => {
+    const user = await Auth.currentAuthenticatedUser();
+    const token = user.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    };
+    const res = await axios.get(
+      "https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users",
+      requestInfo
+    );
+    setUsers(res.data);
   };
 
-  function Delete(id) {
-    axios.delete(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users/${id}`).then(getUsersData());
-  }
+  const Delete = async (_id) => {
+
+    const user = await Auth.currentAuthenticatedUser();
+    const token = user.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    }
+
+    await axios.delete(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users/${_id}`, requestInfo);
+    getUsersData();
+  };
 
   useEffect(() => {
     getUsersData();

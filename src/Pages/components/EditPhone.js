@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
+import {Auth} from 'aws-amplify';
 
 function EditPhone() {
 
@@ -10,9 +11,16 @@ function EditPhone() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const getPhones = () =>{
+    const getPhones = async () =>{
+      const user = await Auth.currentAuthenticatedUser();
+      const token = user.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+          headers: {
+              Authorization: token,
+          },
+      }
     axios
-      .get(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/one2many/users/${id}`)
+      .get(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/one2many/users/${id}`,requestInfo)
       .then((res) => {
         setProviderName(res.data.providerName);
         setNumber(res.data.number);
@@ -30,10 +38,19 @@ function EditPhone() {
         providerName: providerName,
         number: number
       };
-    
-      function Update() {
-        axios.patch(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/one2many/phonenumbers/${id}`, data).then(navigate("/"));
+
+    const Update = async () =>{
+      const user = await Auth.currentAuthenticatedUser();
+      const token = user.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+          headers: {
+              Authorization: token,
+          },
       }
+      axios.patch(`https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/one2many/phonenumbers/${id}`, data,requestInfo)
+      .then(navigate("/"));
+
+    }
 
 
   return (

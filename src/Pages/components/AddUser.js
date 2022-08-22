@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { Auth } from "aws-amplify";
 
 function AddUser() {
   const [name, setName] = useState("");
@@ -15,13 +16,27 @@ function AddUser() {
     surname: surname,
     email: email,
     address: address,
-    //phoneNumber: phoneNumber
   };
 
-  function Submit(e) {
+  const Submit = async (e) => {
     e.preventDefault();
-    axios.post("https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users", data).then(navigate("/"));
-  }
+
+    const userAuth = await Auth.currentAuthenticatedUser();
+    const token = userAuth.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    };
+
+    await axios
+      .post(
+        "https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users",
+        data,
+        requestInfo
+      );
+      navigate("/");
+  };
 
   return (
     <div className="w-screen h-full flex flex-col justify-center items-center mt-4">

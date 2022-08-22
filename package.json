@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-amplify/ui-react": "^1.2.26",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/material": "^5.9.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "aws-amplify": "^4.3.31",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.0",
     "react": "^18.2.0",
@@ -22,7 +24,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "client-s3-deploy": "aws s3 sync build/ s3://aws-enris-dev-serverlessdeploymentbucket-qitj0a7yv6cp",
+    "client-s3-deploy": "aws s3 sync build/ s3://amplify-taleasfrontend-dev-125553-deployment",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
