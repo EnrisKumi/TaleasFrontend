@@ -22,6 +22,7 @@ function AddUser() {
     e.preventDefault();
 
     const userAuth = await Auth.currentAuthenticatedUser();
+    const userId = userAuth.attributes.sub;
     const token = userAuth.signInUserSession.idToken.jwtToken;
     const requestInfo = {
       headers: {
@@ -31,7 +32,7 @@ function AddUser() {
 
     await axios
       .post(
-        "https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users",
+        "https://gr7jtt9xnj.execute-api.eu-central-1.amazonaws.com/dev/users",
         data,
         requestInfo
       );

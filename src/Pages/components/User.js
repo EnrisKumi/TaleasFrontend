@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Auth } from "aws-amplify";
 
 function User() {
-  const { id } = useParams();
+  const { id  } = useParams();
   const [user, setUser] = useState();
 
   const getUsersData = async () => {
@@ -16,7 +16,7 @@ function User() {
       },
     };
     const res = await axios.get(
-      `https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users/${id}`,
+      `https://gr7jtt9xnj.execute-api.eu-central-1.amazonaws.com/dev/users/${id}`,
       requestInfo
     );
     setUser(res.data);
@@ -68,7 +68,7 @@ function User() {
               {user.address}
             </h2>
             <Link
-              to={`/phonenr/${id}`}
+              to={`/phonenr/users/${id}`}
               className="px-16 font-semibold font-Inter text-lg text-white bg-blue-600 rounded-lg"
             >
               Click to see

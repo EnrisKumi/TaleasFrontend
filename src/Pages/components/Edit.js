@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import {Auth} from 'aws-amplify';
+import { Auth } from "aws-amplify";
 
 function Edit() {
   const [name, setName] = useState("");
@@ -20,11 +20,7 @@ function Edit() {
         Authorization: token,
       },
     };
-    const res = await axios
-      .get(
-        `https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users/${id}`,
-        requestInfo
-      )
+    const res = await axios.get(`https://gr7jtt9xnj.execute-api.eu-central-1.amazonaws.com/dev/users/${id}`,requestInfo)
       .then((res) => {
         setName(res.data.name);
         setSurname(res.data.surname);
@@ -45,24 +41,24 @@ function Edit() {
     surname: surname,
     email: email,
     address: address,
-
   };
 
-  const Update = async() =>{
+  const Update = async () => {
     const user = await Auth.currentAuthenticatedUser();
-        const token = user.signInUserSession.idToken.jwtToken;
-        const requestInfo = {
-            headers: {
-                Authorization: token,
-            },
-        }
-        axios
-        .patch(
-          `https://84rbgywbj1.execute-api.eu-central-1.amazonaws.com/dev/users/${id}`,
-          data,requestInfo
-        )
-        .then(navigate("/"));
-  }
+    const token = user.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    };
+    axios
+      .patch(
+        `https://gr7jtt9xnj.execute-api.eu-central-1.amazonaws.com/dev/users/${id}`,
+        data,
+        requestInfo
+      )
+      .then(navigate("/"));
+  };
 
   return (
     <div className="w-screen h-full flex flex-col justify-center items-center mt-4">
@@ -101,6 +97,7 @@ function Edit() {
           placeholder="Update your address:"
           className="w-[80%] bg-white/10 mt-3 text-xl font-Montserrat font-normal outline-none py-2 pl-2 border border-zinc-400"
         />
+
         <button
           onClick={Update}
           className="w-[50%] bg-blue-600 mt-3 text-white font-semibold text-xl font-Montserrat py-2 pl-2 rounded-lg"

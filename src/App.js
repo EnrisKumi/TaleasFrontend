@@ -10,7 +10,7 @@ import ShowPhone from "./Pages/components/ShowPhone";
 import EditPhone from "./Pages/components/EditPhone";
 import Amplify from "aws-amplify";
 import awsconfig from "./aws-exports";
-import {AmplifySignOut,withAuthenticator} from "@aws-amplify/ui-react";
+import {withAuthenticator} from "@aws-amplify/ui-react";
 
 Amplify.configure(awsconfig);
 function App() {
@@ -23,7 +23,7 @@ function App() {
         <Route path="/add-user" element={<AddUser />} />
         <Route path="/edit-user/:id" element={<Edit />} />
         <Route path="/phone/:id" element={<AddPhone />} />
-        <Route path="/phonenr/:id" element={<ShowPhone />} />
+        <Route path="/phonenr/users/:id" element={<ShowPhone />} />
         <Route path="/edit-phone/:id" element={<EditPhone />} />
       </Routes>
     </div>
